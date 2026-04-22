@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>relogio| Davy
+    </title>
+    <style>
+        /* Estética Low Profile Dark / Café */
+        body {
+            background-color: #1a1614; /* Fundo café torrado escuro */
+            color: #dcd7cc; /* Texto bege suave */
+            font-family: 'Georgia', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 600px;
+            padding: 20px;
+        }
+
+        .music-tag {
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #8c7d70; /* Cor de café com leite */
+            margin-bottom: 5px;
+        }
+
+        /* Relógio Grande e Imponente */
+        #relogio {
+            font-size: 7rem;
+            font-weight: 100; /* Linhas bem finas */
+            margin: 0;
+            letter-spacing: -3px;
+            color: #ece9e1;
+        }
+
+        #data {
+            font-size: 1rem;
+            color: #8c7d70;
+            margin-top: -10px;
+            margin-bottom: 50px;
+            text-transform: lowercase; /* Estética minimalista */
+            letter-spacing: 1px;
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, #4a3f35, transparent);
+            width: 200px;
+            margin: 0 auto 30px auto;
+        }
+
+        .frase-area {
+            font-style: italic;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            min-height: 60px;
+            max-width: 90%;
+            margin: 0 auto;
+            color: #b2a496;
+            opacity: 0.9;
+        }
+
+        /* Um detalhe sutil no canto da tela */
+        .footer-note {
+            position: absolute;
+            bottom: 20px;
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            color: #3d352e;
+            text-transform: uppercase;
+        }
+    </style>
+    <link rel="manifest" href="manifest.json">
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js');
+  }
+</script>
+</head>
+<body>
+
+    <div class="container">
+        <div class="music-tag">Não a nada que eu queira mais que a sua presença</div>
+        
+        <div id="relogio">00:00:00</div>
+        <div id="data">---</div>
+
+        <div class="divider"></div>
+
+        <div class="frase-area" id="frase">
+            "Aquietai-vos e sabei que eu sou Deus."
+        </div>
+    </div>
+
+    <div class="footer-note">Feito por DAVY AZEVEDO</div>
+
+    <script>
+        function atualizarRelogio() {
+            const agora = new Date();
+            
+            // Horas, Minutos, Segundos
+            const horas = String(agora.getHours()).padStart(2, '0');
+            const minutos = String(agora.getMinutes()).padStart(2, '0');
+            const segundos = String(agora.getSeconds()).padStart(2, '0');
+            
+            document.getElementById('relogio').innerText = `${horas}:${minutos}:${segundos}`;
+
+            // Data formatada
+            const opcoesData = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+            document.getElementById('data').innerText = agora.toLocaleDateString('pt-PT', opcoesData);
+        }
+
+        // Atualização constante
+        setInterval(atualizarRelogio, 1000);
+        atualizarRelogio();
+
+        // Lista de frases para reflexão
+        const frases = [
+            "\"Aquietai-vos e sabei que eu sou Deus.\"",
+            "\"A tua graça me basta.\"",
+            "\"Em paz me deito e logo pego no sono.\"",
+            "\"Luz para o meu caminho é a tua palavra.\"",
+            "\"Onde houver luz, não haverá trevas.\"",
+            "\"Santo, Santo, Santo.\""
+        ];
+
+        // Troca a frase a cada 20 segundos
+        setInterval(() => {
+            const index = Math.floor(Math.random() * frases.length);
+            const elementoFrase = document.getElementById('frase');
+            
+            // Pequeno efeito de fade ao trocar
+            elementoFrase.style.opacity = 0;
+            setTimeout(() => {
+                elementoFrase.innerText = frases[index];
+                elementoFrase.style.opacity = 0.9;
+            }, 500);
+
+        }, 20000);
+    </script>
+</body>
+</html>
